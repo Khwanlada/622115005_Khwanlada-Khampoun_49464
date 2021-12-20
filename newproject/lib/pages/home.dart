@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'details.dart';
 
 class HomePage extends StatefulWidget {
   //const HomePage({ Key? key }) : super(key: key);
@@ -16,24 +18,25 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: ListView(children: [
-          MyBox("What is a computer?","Computer is a things to calculate and for any other works",
-          "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
-          SizedBox(height: 16,),
-          MyBox("What is Flutter?","Flutter is a tool to create a mobile application",
-          "https://careerswithstem.com.au/wp-content/uploads/2021/01/Should-I-study-computer-science.jpg"),
-          SizedBox(height: 16,),
-          MyBox("What is Dart?","Dart is the language used in Flutter",
-          "https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt962a6518612d78db/6131a93da9655d098c7cd8f0/09082021-Episode-3-Act-II-Overview-Article-Banner.jpg"),
-          SizedBox(height: 16,),
-        ],)
+        child: FutureBuilder(
+          builder: (context, snapshot) {
+          var data = json.decode(snapshot.data.toString());
+          return ListView.builder(itemBuilder: (BuildContext context, int index){
+            return MyBox(data[index]['title'],data[index]['subtitle'], data[index]['image_url'] , context);
+          },
+          itemCount: data.length,);
+        },
+        future: DefaultAssetBundle.of(context).loadString('assets/data.json'),
       ),
-    );
+      
+      )
+      );
   }
 }
 
-Widget MyBox(String title, String subtitle, String image_url){
+Widget MyBox(String title, String subtitle, String image_url , BuildContext context){
     return Container(
+      margin: EdgeInsets.only(top: 20),
       padding: EdgeInsets.all(16),
       height: 150,
       decoration: BoxDecoration(
@@ -42,7 +45,8 @@ Widget MyBox(String title, String subtitle, String image_url){
         image: DecorationImage(
           image: NetworkImage(image_url),
           fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken )
+          colorFilter: ColorFilter.mode(
+            Colors.black.withOpacity(0.5), BlendMode.darken )
           ) 
       ),
       child: Column(
@@ -51,15 +55,22 @@ Widget MyBox(String title, String subtitle, String image_url){
         children: [
         Text(
           title, 
-        style: TextStyle(
-          fontSize: 25,
-          color: Colors.white,
-          fontWeight: FontWeight.bold
-          )
+          style: TextStyle(
+            fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold)
         ),
-          SizedBox(height: 20,),
+          SizedBox(height: 15,),
         Text(subtitle, style: TextStyle(fontSize: 15,
-        color: Colors.white),)
-      ],),
+        color: Colors.white),
+        ),
+         SizedBox(height: 15,),
+         TextButton(
+           onPressed: () {
+             print("next page >>");
+             Navigator.push(context , MaterialPageRoute(builder: (context) => DetailsPage()));
+           },
+           child: Text("read more"),
+         )
+      ],
+      ),
     );
   }

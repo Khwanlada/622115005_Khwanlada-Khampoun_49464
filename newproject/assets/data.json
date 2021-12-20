@@ -1,0 +1,17 @@
+[
+    {
+        "title":"What is a computer?",
+        "subtitle":"Computer is a things to calculate and for any other works",
+        "image_url":"https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+    },
+    {
+        "title":"What is Flutter?",
+        "subtitle":"Flutter is a tool to create a mobile application",
+        "image_url":"https://careerswithstem.com.au/wp-content/uploads/2021/01/Should-I-study-computer-science.jpg"
+    },
+    {
+        "title":"What is Dart?",
+        "subtitle":"Dart is the language used in Flutter",
+        "image_url":"https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt962a6518612d78db/6131a93da9655d098c7cd8f0/09082021-Episode-3-Act-II-Overview-Article-Banner.jpg"
+    }
+]
